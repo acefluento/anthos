@@ -144,7 +144,6 @@ header.site::after {
   from { transform: translateX(-10px); }
   to { transform: translateX(10px); }
 }
-
 .boltcrest {
   position: absolute; left: 50%; top: 50%; width: 90px; height: 300px; margin: -150px 0 0 -45px; z-index: 1;
 }

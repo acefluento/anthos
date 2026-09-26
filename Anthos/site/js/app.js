@@ -331,7 +331,7 @@
   if (heroBox && fireball) {
     var setFireballOrbit = function () {
       var w = heroBox.clientWidth, h = heroBox.clientHeight;
-      var rx = w * 0.3938, ry = h * 0.3675;
+      var rx = w * 0.3785, ry = h * 0.3227;
       fireball.style.offsetPath = "path('M " + (-rx) + ",0 A " + rx + " " + ry + " 0 1 1 " + rx + ",0 A " + rx + " " + ry + " 0 1 1 " + (-rx) + ",0')";
     };
     setFireballOrbit();

@@ -322,23 +322,16 @@
     }).then(function () { busy(btn, false, was); });
   });
 
-  /* ---------- hero fireball orbit ----------
-     offset-path with an absolute SVG path doesn't scale with a fluid container, so the
-     triangle hugging the arch's outer silhouette (two legs + peak) is recomputed from the
-     arch box's actual rendered size (and on resize) instead of hardcoded, keeping the fireball
-     locked to the arch at any width. Coordinates mirror the arch-svg's own viewBox (0 0 320 420):
-     bottom-left leg, peak, bottom-right leg. */
-  var archBox = $('.arch-orbit'), fireball = $('.fireball');
-  if (archBox && fireball) {
-    var setFireballOrbit = function () {
-      var w = archBox.clientWidth, h = archBox.clientHeight;
-      var x1 = w * (10 / 320), y1 = h * (418 / 420);
-      var x2 = w * (160 / 320), y2 = h * (8 / 420);
-      var x3 = w * (310 / 320), y3 = h * (418 / 420);
-      fireball.style.offsetPath = "path('M " + x1 + " " + y1 + " L " + x2 + " " + y2 + " L " + x3 + " " + y3 + " Z')";
-    };
-    setFireballOrbit();
-    window.addEventListener('resize', setFireballOrbit);
+  /* ---------- hero bolt zap ----------
+     the electric charge travels around the bolt's own outline via native SVG SMIL
+     (animateMotion + mpath referencing the shared #bolt path), which scales automatically
+     with the bolt's own viewBox regardless of rendered size — no JS resize math needed here,
+     unlike the wreath/fireball orbit in earlier rounds. SMIL isn't touched by the site's
+     global CSS prefers-reduced-motion override (that only collapses CSS animation/transition
+     durations), so it's paused explicitly here when reduced motion is requested. */
+  if (reduceMotion) {
+    var boltSvg = $('.boltcrest svg');
+    if (boltSvg && boltSvg.pauseAnimations) boltSvg.pauseAnimations();
   }
 
   /* ---------- scramble / decrypt text reveal ---------- */

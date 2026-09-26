@@ -322,14 +322,20 @@
     }).then(function () { busy(btn, false, was); });
   });
 
-  /* ---------- brandmark cursor light ---------- */
-  var brandmark = $('.brandmark');
-  if (brandmark && !reduceMotion && window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
-    brandmark.addEventListener('pointermove', function (e) {
-      var r = brandmark.getBoundingClientRect();
-      brandmark.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-      brandmark.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
-    });
+  /* ---------- hero fireball orbit ----------
+     offset-path with an absolute SVG path doesn't scale with a fluid container, but the
+     wreath itself is pure SVG viewBox and does — so the orbit radius is recomputed from the
+     hero box's actual rendered size (and on resize) instead of hardcoded, keeping the fireball
+     locked to the wreath's ring at any width. */
+  var heroBox = $('.brandhero-in'), fireball = $('.fireball');
+  if (heroBox && fireball) {
+    var setFireballOrbit = function () {
+      var w = heroBox.clientWidth, h = heroBox.clientHeight;
+      var rx = w * 0.3938, ry = h * 0.3675;
+      fireball.style.offsetPath = "path('M " + (-rx) + ",0 A " + rx + " " + ry + " 0 1 1 " + rx + ",0 A " + rx + " " + ry + " 0 1 1 " + (-rx) + ",0')";
+    };
+    setFireballOrbit();
+    window.addEventListener('resize', setFireballOrbit);
   }
 
   /* ---------- small things ---------- */

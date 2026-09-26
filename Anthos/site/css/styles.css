@@ -117,13 +117,8 @@ header.site::after {
 .btnrow { display: flex; gap: 14px; flex-wrap: wrap; }
 .addbtn { width: 100%; }
 
-/* ---------- brand hero: storm sky, stone arch stands in for the "A", fireball orbits the arch ---------- */
-.brandhero {
-  position: relative; overflow: hidden; padding: 56px 20px;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 100%, rgba(214, 164, 84, .35) 0%, rgba(214, 164, 84, 0) 65%),
-    linear-gradient(180deg, #0a0e2a 0%, #141a3d 22%, #2b2f52 42%, #6a5a55 62%, #b9884f 80%, #e6b467 100%);
-}
+/* ---------- brand hero: starry charcoal night, oblong laurel wreath, plain wordmark, bolt+clouds crest with an electric zap ---------- */
+.brandhero { position: relative; overflow: hidden; padding: 56px 20px; background: #1a1a1d; }
 .storm-flash {
   position: absolute; inset: 0; background: #dfe9ff; opacity: 0; pointer-events: none;
   mix-blend-mode: screen; animation: storm-flash 1.1s ease-out 1 both;
@@ -133,101 +128,31 @@ header.site::after {
   13% { opacity: .75; } 20% { opacity: 0; } 100% { opacity: 0; }
 }
 .brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 1300 / 480; margin: 0 auto; }
+.stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .8; }
+.stars circle { fill: #fff; }
+.wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
 
-.cloud {
-  position: absolute; border-radius: 50%; filter: blur(7px);
-  background: radial-gradient(ellipse at 50% 40%, rgba(240, 205, 140, .75) 0%, rgba(120, 90, 60, .4) 45%, rgba(20, 20, 30, 0) 75%);
-  animation: cloud-drift 26s ease-in-out infinite alternate;
+.boltcrest {
+  position: absolute; left: 50%; top: 50%; width: 90px; height: 300px; margin: -150px 0 0 -45px; z-index: 1;
 }
-.cloud.c1 { left: 2%; top: 4%; width: 15%; height: 22%; animation-duration: 24s; }
-.cloud.c2 { left: 28%; top: 0%; width: 13%; height: 18%; animation-duration: 30s; animation-direction: alternate-reverse; opacity: .8; }
-.cloud.c3 { left: 52%; top: 6%; width: 14%; height: 20%; animation-duration: 22s; }
-.cloud.c4 { left: 76%; top: 2%; width: 13%; height: 18%; animation-duration: 28s; animation-direction: alternate-reverse; }
-.cloud.c5 { left: 8%; top: 24%; width: 10%; height: 14%; animation-duration: 26s; opacity: .55; }
-.cloud.c6 { left: 62%; top: 20%; width: 11%; height: 15%; animation-duration: 20s; opacity: .5; animation-direction: alternate-reverse; }
-.cloud.c7 { left: 40%; top: 26%; width: 9%; height: 13%; animation-duration: 32s; opacity: .45; }
-.cloud.c8 { left: 88%; top: 22%; width: 9%; height: 13%; animation-duration: 25s; opacity: .5; animation-direction: alternate-reverse; }
-@keyframes cloud-drift {
-  from { transform: translateX(-10px); }
-  to { transform: translateX(10px); }
-}
+.boltcrest svg { width: 100%; height: 100%; overflow: visible; }
+.boltcrest use { fill: var(--gold); stroke: #f2d9a1; stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 0 10px rgba(176, 141, 87, .6)); }
+.crestcloud { filter: blur(1.6px); }
+.crestcloud.cc1 { fill: #8d8d95; opacity: .65; }
+.crestcloud.cc2 { fill: #d8b675; opacity: .7; }
+.crestcloud.cc3 { fill: #6c6c74; opacity: .5; }
+.zap { fill: #fff8e6; }
+.zap-c1 { filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 16px #ffe9b0) drop-shadow(0 0 30px rgba(176, 141, 87, .9)); }
+.zap-c2 { opacity: .6; filter: drop-shadow(0 0 8px rgba(255, 240, 200, .8)); }
+.zap-c3 { opacity: .35; filter: drop-shadow(0 0 6px rgba(255, 240, 200, .6)); }
 
-.skybolt { position: absolute; opacity: .8; animation: bolt-flicker 6s ease-in-out infinite; }
-.skybolt svg { width: 100%; height: 100%; overflow: visible; }
-.skybolt use { fill: #ecd9a4; filter: drop-shadow(0 0 8px rgba(236, 217, 164, .7)); }
-.skybolt.sb1 { left: 12%; top: 2%; width: 3%; height: 34%; transform: rotate(-8deg); }
-.skybolt.sb2 { left: 70%; top: 0%; width: 2.6%; height: 28%; transform: rotate(6deg); animation-delay: -2s; }
-.skybolt.sb3 { left: 58%; top: 6%; width: 2%; height: 22%; transform: rotate(-4deg); animation-delay: -4s; }
-.skybolt.sb4 { left: 26%; top: 10%; width: 1.7%; height: 18%; transform: rotate(10deg); animation-delay: -1s; }
-@keyframes bolt-flicker {
-  0%, 83% { opacity: .55; filter: drop-shadow(0 0 0 transparent); }
-  86%, 91% { opacity: 1; filter: drop-shadow(0 0 16px rgba(255, 255, 255, .9)); }
-  96%, 100% { opacity: .55; filter: drop-shadow(0 0 0 transparent); }
+.brandhero-word {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3;
+  font-family: 'Century Gothic', 'Avenir Next', 'Poppins', Futura, 'Nunito Sans', 'Trebuchet MS', Arial, sans-serif;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 8px;
+  font-size: clamp(28px, 5.5vw, 64px);
+  color: #F2EEE5;
 }
-
-.archrow { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; gap: 2px; padding-bottom: 8%; }
-.arch-orbit { position: relative; flex: none; width: clamp(90px, 17vw, 220px); aspect-ratio: 320 / 420; }
-.arch-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.arch-leg { fill: url(#archstone); stroke: url(#archrim); stroke-width: 2; }
-.archword {
-  font-family: Georgia, 'Times New Roman', 'Iowan Old Style', serif;
-  font-weight: 700; letter-spacing: 4px;
-  font-size: clamp(30px, 7.4vw, 84px); line-height: 1;
-  color: #ECD9B4;
-  -webkit-text-stroke: 1.2px #2a2010;
-  text-shadow: 0 0 18px rgba(230, 180, 90, .5), 0 2px 0 #2a2010;
-  transform: translateY(-.06em);
-}
-.fireball {
-  position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 4;
-  offset-rotate: auto;
-  animation: fireball-travel 16s linear infinite;
-}
-.fireball-shadow {
-  position: absolute; left: -20px; top: -20px; width: 40px; height: 40px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 200, 130, .4) 0%, rgba(255, 154, 46, .2) 45%, rgba(255, 154, 46, 0) 75%);
-  filter: blur(5px);
-  z-index: 1;
-}
-.fireball-core {
-  position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%;
-  background: radial-gradient(circle at 32% 30%, #ffffff 0%, #fff6d6 14%, #ffe27a 32%, #ffb84d 55%, #ff8a2e 75%, #c9531a 100%);
-  filter: drop-shadow(0 0 6px #ffe9b0) drop-shadow(0 0 14px #ffb04d) drop-shadow(0 0 26px #ff8a2e) drop-shadow(0 0 42px rgba(217, 96, 26, .7));
-  z-index: 3;
-}
-.fireball-flame {
-  position: absolute; top: 50%; left: -34px; width: 34px; height: 22px; z-index: 2;
-  transform-origin: 100% 50%;
-  filter: drop-shadow(0 0 3px currentColor);
-}
-.fireball-flame svg { display: block; width: 100%; height: 100%; overflow: visible; fill: currentColor; }
-.fireball-flame.f1 { color: #ff6a1a; animation: flame-flick-a .5s ease-in-out infinite alternate; }
-.fireball-flame.f2 { width: 25px; color: #ff9a2e; opacity: .9; animation: flame-flick-b .68s ease-in-out infinite alternate; }
-.fireball-flame.f3 { width: 16px; color: #ffce5c; opacity: .85; animation: flame-flick-a .4s ease-in-out infinite alternate-reverse; }
-.fireball-flame.f4 { width: 10px; height: 16px; color: #fff2c0; opacity: .8; animation: flame-flick-b .3s ease-in-out infinite alternate-reverse; }
-@keyframes flame-flick-a {
-  from { transform: translateY(-50%) rotate(-8deg) scaleX(1); }
-  to { transform: translateY(-42%) rotate(7deg) scaleX(.86); }
-}
-@keyframes flame-flick-b {
-  from { transform: translateY(-58%) scaleX(.8) rotate(6deg); }
-  to { transform: translateY(-50%) scaleX(.7) rotate(-6deg); }
-}
-.ember {
-  position: absolute; top: 50%; left: -36px; width: 3px; height: 3px; border-radius: 50%;
-  background: #ffb84d; box-shadow: 0 0 5px #ffb84d, 0 0 9px #ff8a2e; z-index: 2;
-}
-.ember.e1 { animation: ember-drift-a 1.3s ease-in-out infinite; }
-.ember.e2 { left: -44px; top: 46%; width: 2px; height: 2px; animation: ember-drift-b 1.7s ease-in-out .4s infinite; }
-@keyframes ember-drift-a {
-  0% { opacity: .9; transform: translateY(-50%) scale(1); }
-  100% { opacity: 0; transform: translateY(-85%) scale(.4); }
-}
-@keyframes ember-drift-b {
-  0% { opacity: .8; transform: translateY(-50%) scale(1); }
-  100% { opacity: 0; transform: translateY(-15%) scale(.3); }
-}
-@keyframes fireball-travel { from { offset-distance: 0%; } to { offset-distance: 100%; } }
 
 /* ---------- hero ---------- */
 .hero { background: linear-gradient(160deg, #F1EDE4 0%, #E7E1D5 55%, #D9D2C3 100%); border-bottom: 1px solid var(--line); }

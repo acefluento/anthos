@@ -338,6 +338,68 @@
     window.addEventListener('resize', setFireballOrbit);
   }
 
+  /* ---------- scramble / decrypt text reveal ---------- */
+  function TextScramble(el) {
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#';
+  }
+  TextScramble.prototype.setText = function (newText) {
+    var oldText = this.el.textContent;
+    var length = Math.max(oldText.length, newText.length);
+    this.queue = [];
+    for (var i = 0; i < length; i++) {
+      var from = oldText[i] || '';
+      var to = newText[i] || '';
+      var start = Math.floor(Math.random() * 30);
+      var end = start + Math.floor(Math.random() * 30) + 10;
+      this.queue.push({ from: from, to: to, start: start, end: end });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+  };
+  TextScramble.prototype.update = function () {
+    var output = '', complete = 0;
+    for (var i = 0, n = this.queue.length; i < n; i++) {
+      var q = this.queue[i];
+      if (this.frame >= q.end) {
+        complete++;
+        output += q.to;
+      } else if (this.frame >= q.start) {
+        if (!q.char || Math.random() < 0.28) { q.char = this.randomChar(); }
+        output += '<span class="dchar">' + q.char + '</span>';
+      } else {
+        output += q.from;
+      }
+    }
+    this.el.innerHTML = output;
+    if (complete < this.queue.length) {
+      this.frameRequest = requestAnimationFrame(this.update.bind(this));
+      this.frame++;
+    }
+  };
+  TextScramble.prototype.randomChar = function () {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  };
+
+  var scrambleEls = $$('.scramble');
+  if (scrambleEls.length) {
+    if (reduceMotion) {
+      // leave the static text exactly as authored
+    } else if ('IntersectionObserver' in window) {
+      var scrambleIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          new TextScramble(entry.target).setText(entry.target.textContent);
+          scrambleIO.unobserve(entry.target);
+        });
+      }, { threshold: 0.4 });
+      scrambleEls.forEach(function (el) { scrambleIO.observe(el); });
+    } else {
+      scrambleEls.forEach(function (el) { new TextScramble(el).setText(el.textContent); });
+    }
+  }
+
   /* ---------- small things ---------- */
   var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 

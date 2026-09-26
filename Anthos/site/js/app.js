@@ -323,16 +323,19 @@
   });
 
   /* ---------- hero fireball orbit ----------
-     offset-path with an absolute SVG path doesn't scale with a fluid container, but the
-     wreath itself is pure SVG viewBox and does — so the orbit radius is recomputed from the
-     hero box's actual rendered size (and on resize) instead of hardcoded, keeping the fireball
-     locked to the wreath's ring at any width. */
-  var heroBox = $('.brandhero-in'), fireball = $('.fireball');
-  if (heroBox && fireball) {
+     offset-path with an absolute SVG path doesn't scale with a fluid container, so the
+     triangle hugging the arch's outer silhouette (two legs + peak) is recomputed from the
+     arch box's actual rendered size (and on resize) instead of hardcoded, keeping the fireball
+     locked to the arch at any width. Coordinates mirror the arch-svg's own viewBox (0 0 320 420):
+     bottom-left leg, peak, bottom-right leg. */
+  var archBox = $('.arch-orbit'), fireball = $('.fireball');
+  if (archBox && fireball) {
     var setFireballOrbit = function () {
-      var w = heroBox.clientWidth, h = heroBox.clientHeight;
-      var rx = w * 0.3785, ry = h * 0.3227;
-      fireball.style.offsetPath = "path('M " + (-rx) + ",0 A " + rx + " " + ry + " 0 1 1 " + rx + ",0 A " + rx + " " + ry + " 0 1 1 " + (-rx) + ",0')";
+      var w = archBox.clientWidth, h = archBox.clientHeight;
+      var x1 = w * (10 / 320), y1 = h * (418 / 420);
+      var x2 = w * (160 / 320), y2 = h * (8 / 420);
+      var x3 = w * (310 / 320), y3 = h * (418 / 420);
+      fireball.style.offsetPath = "path('M " + x1 + " " + y1 + " L " + x2 + " " + y2 + " L " + x3 + " " + y3 + " Z')";
     };
     setFireballOrbit();
     window.addEventListener('resize', setFireballOrbit);

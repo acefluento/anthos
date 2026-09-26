@@ -129,17 +129,22 @@ header.site::after {
 }
 .brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 1300 / 440; margin: 0 auto; }
 .wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
-.cloud { position: absolute; fill: #2f2f34; opacity: .5; filter: blur(7px); animation: cloud-drift 26s ease-in-out infinite alternate; }
-.cloud.c1 { left: 0%; top: 4%; width: 110px; height: 110px; animation-duration: 24s; }
-.cloud.c2 { right: 2%; top: 58%; width: 120px; height: 120px; animation-duration: 30s; animation-direction: alternate-reverse; }
-.cloud.c3 { left: 20%; top: 78%; width: 70px; height: 70px; opacity: .35; animation-duration: 22s; }
-.cloud.c4 { right: 22%; top: 2%; width: 80px; height: 80px; opacity: .38; animation-duration: 28s; animation-direction: alternate-reverse; }
+.cloud { position: absolute; fill: #2f2f34; opacity: .5; filter: blur(7px); animation: cloud-drift 26s ease-in-out infinite alternate, cloud-strike 6s ease-in-out infinite; }
+.cloud.c1 { left: 0%; top: 4%; width: 110px; height: 110px; animation-duration: 24s, 6s; --strike-dx: -26px; }
+.cloud.c2 { right: 2%; top: 58%; width: 120px; height: 120px; animation-duration: 30s, 6s; animation-direction: alternate-reverse, normal; --strike-dx: 26px; }
+.cloud.c3 { left: 20%; top: 78%; width: 70px; height: 70px; opacity: .35; animation-duration: 22s, 6s; --strike-dx: -18px; }
+.cloud.c4 { right: 22%; top: 2%; width: 80px; height: 80px; opacity: .38; animation-duration: 28s, 6s; animation-direction: alternate-reverse, normal; --strike-dx: 18px; }
 @keyframes cloud-drift {
   from { transform: translateX(-14px); }
   to { transform: translateX(14px); }
 }
+@keyframes cloud-strike {
+  0%, 83% { margin-left: 0; opacity: 1; }
+  86%, 91% { margin-left: var(--strike-dx, 0); opacity: 1.15; }
+  96%, 100% { margin-left: 0; opacity: 1; }
+}
 .bolt-wrap {
-  position: relative; display: inline-block; width: .55em; height: 1em; vertical-align: middle; z-index: 1;
+  position: relative; display: inline-block; width: .55em; height: 1em; vertical-align: middle; z-index: 0;
 }
 .bolt-wrap svg {
   position: absolute; left: 50%; top: 50%; width: 1.15em; height: 6.05em;
@@ -148,7 +153,21 @@ header.site::after {
 }
 .bolt-wrap use {
   fill: var(--gold); stroke: #f2d9a1; stroke-width: 2; stroke-linejoin: round;
-  filter: drop-shadow(0 0 10px rgba(176, 141, 87, .7)) drop-shadow(0 0 22px rgba(176, 141, 87, .35));
+  animation: bolt-strike 6s ease-in-out infinite;
+}
+@keyframes bolt-strike {
+  0%, 83% {
+    fill: var(--gold); stroke: #f2d9a1;
+    filter: drop-shadow(0 0 10px rgba(176, 141, 87, .7)) drop-shadow(0 0 22px rgba(176, 141, 87, .35));
+  }
+  86%, 91% {
+    fill: #fffdf5; stroke: #ffffff;
+    filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 34px #fff8e0) drop-shadow(0 0 70px rgba(176, 141, 87, 1)) drop-shadow(0 0 120px rgba(176, 141, 87, .7));
+  }
+  96%, 100% {
+    fill: var(--gold); stroke: #f2d9a1;
+    filter: drop-shadow(0 0 10px rgba(176, 141, 87, .7)) drop-shadow(0 0 22px rgba(176, 141, 87, .35));
+  }
 }
 .brandhero-word {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3;
@@ -166,26 +185,34 @@ header.site::after {
   padding: .18em .5em;
   border-radius: 6px;
 }
+.brandhero-word-row .scramble { position: relative; z-index: 1; }
 .fireball {
   position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 4;
   offset-rotate: auto;
-  animation: fireball-travel 8s linear infinite;
+  animation: fireball-travel 18s linear infinite;
+}
+.fireball-shadow {
+  position: absolute; left: -20px; top: -20px; width: 40px; height: 40px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 130, .4) 0%, rgba(255, 154, 46, .2) 45%, rgba(255, 154, 46, 0) 75%);
+  filter: blur(5px);
+  z-index: 1;
 }
 .fireball-core {
-  position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fff2c0 20%, #ffcf4d 45%, #ff9a2e 70%, #d9601a 100%);
-  filter: drop-shadow(0 0 8px #ffd27a) drop-shadow(0 0 18px #ff9a2e) drop-shadow(0 0 30px #e8862c);
-  z-index: 2;
+  position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #ffffff 0%, #fff6d6 14%, #ffe27a 32%, #ffb84d 55%, #ff8a2e 75%, #c9531a 100%);
+  filter: drop-shadow(0 0 6px #ffe9b0) drop-shadow(0 0 14px #ffb04d) drop-shadow(0 0 26px #ff8a2e) drop-shadow(0 0 42px rgba(217, 96, 26, .7));
+  z-index: 3;
 }
 .fireball-flame {
-  position: absolute; top: 50%; left: -30px; width: 30px; height: 20px;
+  position: absolute; top: 50%; left: -34px; width: 34px; height: 22px; z-index: 2;
   transform-origin: 100% 50%;
   filter: drop-shadow(0 0 3px currentColor);
 }
 .fireball-flame svg { display: block; width: 100%; height: 100%; overflow: visible; fill: currentColor; }
-.fireball-flame.f1 { color: #ff6a1a; animation: flame-flick-a .32s ease-in-out infinite alternate; }
-.fireball-flame.f2 { width: 22px; color: #ff9a2e; opacity: .9; animation: flame-flick-b .46s ease-in-out infinite alternate; }
-.fireball-flame.f3 { width: 14px; color: #ffce5c; opacity: .85; animation: flame-flick-a .26s ease-in-out infinite alternate-reverse; }
+.fireball-flame.f1 { color: #ff6a1a; animation: flame-flick-a .5s ease-in-out infinite alternate; }
+.fireball-flame.f2 { width: 25px; color: #ff9a2e; opacity: .9; animation: flame-flick-b .68s ease-in-out infinite alternate; }
+.fireball-flame.f3 { width: 16px; color: #ffce5c; opacity: .85; animation: flame-flick-a .4s ease-in-out infinite alternate-reverse; }
+.fireball-flame.f4 { width: 10px; height: 16px; color: #fff2c0; opacity: .8; animation: flame-flick-b .3s ease-in-out infinite alternate-reverse; }
 @keyframes flame-flick-a {
   from { transform: translateY(-50%) rotate(-8deg) scaleX(1); }
   to { transform: translateY(-42%) rotate(7deg) scaleX(.86); }
@@ -193,6 +220,20 @@ header.site::after {
 @keyframes flame-flick-b {
   from { transform: translateY(-58%) scaleX(.8) rotate(6deg); }
   to { transform: translateY(-50%) scaleX(.7) rotate(-6deg); }
+}
+.ember {
+  position: absolute; top: 50%; left: -36px; width: 3px; height: 3px; border-radius: 50%;
+  background: #ffb84d; box-shadow: 0 0 5px #ffb84d, 0 0 9px #ff8a2e; z-index: 2;
+}
+.ember.e1 { animation: ember-drift-a 1.3s ease-in-out infinite; }
+.ember.e2 { left: -44px; top: 46%; width: 2px; height: 2px; animation: ember-drift-b 1.7s ease-in-out .4s infinite; }
+@keyframes ember-drift-a {
+  0% { opacity: .9; transform: translateY(-50%) scale(1); }
+  100% { opacity: 0; transform: translateY(-85%) scale(.4); }
+}
+@keyframes ember-drift-b {
+  0% { opacity: .8; transform: translateY(-50%) scale(1); }
+  100% { opacity: 0; transform: translateY(-15%) scale(.3); }
 }
 @keyframes fireball-travel { from { offset-distance: 0%; } to { offset-distance: 100%; } }
 

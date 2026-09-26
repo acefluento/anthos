@@ -72,7 +72,7 @@ header.site::after {
 .brandmark { justify-self: center; width: 132px; height: 132px; }
 .footmark { width: 116px; height: 116px; margin: 0 auto 20px; }
 .gatemark { width: 168px; height: 168px; margin: 0 auto 30px; }
-.wreath { position: absolute; inset: 9%; width: 82%; height: 82%; color: var(--gold); }
+.wreath { position: absolute; inset: 9%; width: 82%; height: 82%; }
 .brandword {
   position: relative; z-index: 1; font-family: Georgia, 'Times New Roman', serif;
   font-size: 19px; letter-spacing: 1.2px;
@@ -108,6 +108,35 @@ header.site::after {
 .btn[disabled] { opacity: .45; cursor: default; }
 .btnrow { display: flex; gap: 14px; flex-wrap: wrap; }
 .addbtn { width: 100%; }
+
+/* ---------- brand hero: large glowing wreath, mirrors the header mark at hero scale ---------- */
+.brandhero { background: var(--ink); display: flex; justify-content: center; padding: 88px 20px; }
+.brandhero-badge {
+  position: relative; width: 300px; height: 300px; border-radius: 50%;
+  display: grid; place-items: center; overflow: hidden; isolation: isolate;
+  background: var(--ink);
+  animation: hero-glow 5s ease-in-out infinite;
+}
+.brandhero-badge .brandword { font-size: 42px; letter-spacing: 2px; }
+.brandhero-badge::before {
+  content: ""; position: absolute; inset: -70%;
+  background: conic-gradient(from 0deg,
+    transparent 0 32%, rgba(176, 141, 87, .55) 40%, rgba(255, 246, 227, .85) 48%,
+    rgba(176, 141, 87, .55) 56%, transparent 64% 100%);
+  filter: blur(3px); animation: hero-spin 7s linear infinite;
+}
+.brandhero-badge::after {
+  content: ""; position: absolute; inset: -85%;
+  background: conic-gradient(from 200deg, transparent 0 42%, rgba(176, 141, 87, .4) 50%, transparent 58% 100%);
+  filter: blur(6px); animation: hero-spin-rev 12s linear infinite;
+}
+@keyframes hero-spin { to { transform: rotate(1turn); } }
+@keyframes hero-spin-rev { to { transform: rotate(-1turn); } }
+@keyframes hero-glow {
+  0%, 100% { box-shadow: 0 0 40px 4px rgba(176, 141, 87, .3); }
+  35% { box-shadow: 0 0 100px 20px rgba(255, 246, 227, .55); }
+  70% { box-shadow: 0 0 60px 10px rgba(176, 141, 87, .45); }
+}
 
 /* ---------- hero ---------- */
 .hero { background: linear-gradient(160deg, #F1EDE4 0%, #E7E1D5 55%, #D9D2C3 100%); border-bottom: 1px solid var(--line); }
@@ -311,6 +340,9 @@ dialog[open] ~ .toast { z-index: 2000; }
   .navright { grid-area: cart; }
   .nav-links { grid-area: links; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); margin-top: 6px; }
   .nav-links .lk { padding: 12px 0; }
+  .brandhero { padding: 64px 20px; }
+  .brandhero-badge { width: 240px; height: 240px; }
+  .brandhero-badge .brandword { font-size: 32px; }
 }
 @media (max-width: 560px) {
   .btn { padding: 16px 22px; }
@@ -329,6 +361,9 @@ dialog[open] ~ .toast { z-index: 2000; }
   :root { --header-h: 152px; }
   .brandmark { width: 86px; height: 86px; }
   .brandword { font-size: 15px; }
+  .brandhero { padding: 48px 16px; }
+  .brandhero-badge { width: 190px; height: 190px; }
+  .brandhero-badge .brandword { font-size: 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

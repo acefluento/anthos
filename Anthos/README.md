@@ -6,6 +6,7 @@ Static site. No build step. Deploy the `site/` folder.
 1. `./set-domain.sh https://yourdomain.com` swaps the placeholder domain in canonical, Open Graph, schema, sitemap and robots.
 2. **Netlify:** drag the project folder in, or connect the repo. `netlify.toml` publishes `site/`, sets security headers and caching, and Netlify Forms picks up the signup and order forms on its own.
    **Vercel:** import the repo; `vercel.json` handles the rest. Forms need a Formspree endpoint.
+   **GitHub Pages:** `.github/workflows/deploy-pages.yml` (repo root) publishes `Anthos/site` on every push to `main`. One-time setup: repo **Settings → Pages → Source: GitHub Actions**. Every asset and link on the page is root-relative (`/css/...`, `/assets/...`), so the site must sit at a domain root — attach a custom domain under **Settings → Pages → Custom domain** (and point its DNS at GitHub Pages); without one, the default `<owner>.github.io/<repo>/` project-page URL will 404 on CSS, images and internal links. Private repos also need GitHub Pro/Team/Enterprise for Pages to be available at all. Forms need a Formspree endpoint (no Netlify Forms here).
    **Any other host:** upload the contents of `site/`. Forms need a Formspree endpoint.
 3. In `site/js/config.js` set `contactEmail`, and `formEndpoint` if you are not on Netlify.
 

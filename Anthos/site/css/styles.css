@@ -145,7 +145,8 @@ header.site::after {
   to { transform: translateX(10px); }
 }
 .boltcrest {
-  position: absolute; left: 50%; top: 50%; width: 90px; height: 300px; margin: -150px 0 0 -45px; z-index: 1;
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  height: min(300px, 66%); aspect-ratio: 140 / 460; width: auto; z-index: 1;
 }
 .boltcrest svg { width: 100%; height: 100%; overflow: visible; }
 .boltcrest use { fill: var(--gold); stroke: #f2d9a1; stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 0 10px rgba(176, 141, 87, .6)); }

@@ -132,6 +132,19 @@ header.site::after {
 .stars circle { fill: #fff; }
 .wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
 
+.cloud {
+  position: absolute; border-radius: 50%; filter: blur(7px); z-index: 1;
+  animation: cloud-drift 26s ease-in-out infinite alternate;
+}
+.cloud.gc1 { left: 4%; top: 8%; width: 11%; height: 16%; animation-duration: 24s; background: radial-gradient(ellipse at 50% 40%, rgba(216, 182, 117, .75) 0%, rgba(140, 108, 58, .35) 45%, rgba(20, 20, 30, 0) 75%); }
+.cloud.gc2 { right: 6%; top: 42%; width: 9%; height: 13%; animation-duration: 30s; animation-direction: alternate-reverse; background: radial-gradient(ellipse at 50% 40%, rgba(216, 182, 117, .6) 0%, rgba(140, 108, 58, .3) 45%, rgba(20, 20, 30, 0) 75%); }
+.cloud.rc1 { right: 10%; top: 6%; width: 12%; height: 17%; animation-duration: 28s; animation-direction: alternate-reverse; background: radial-gradient(ellipse at 50% 40%, rgba(141, 141, 149, .7) 0%, rgba(90, 90, 98, .35) 45%, rgba(20, 20, 30, 0) 75%); }
+.cloud.rc2 { left: 9%; top: 46%; width: 9%; height: 13%; animation-duration: 22s; background: radial-gradient(ellipse at 50% 40%, rgba(141, 141, 149, .55) 0%, rgba(90, 90, 98, .28) 45%, rgba(20, 20, 30, 0) 75%); }
+@keyframes cloud-drift {
+  from { transform: translateX(-10px); }
+  to { transform: translateX(10px); }
+}
+
 .boltcrest {
   position: absolute; left: 50%; top: 50%; width: 90px; height: 300px; margin: -150px 0 0 -45px; z-index: 1;
 }

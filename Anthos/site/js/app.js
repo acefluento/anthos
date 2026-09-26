@@ -343,11 +343,17 @@
     var oldText = this.el.textContent;
     var length = Math.max(oldText.length, newText.length);
     this.queue = [];
+    /* Each position starts a fixed number of frames after the previous one and spins for a
+       fixed duration before locking — like a combination-safe's reels settling one at a time,
+       left to right, rather than the previous fully-random per-char timing (which could let
+       a later letter lock in before an earlier one). Slower than before: bigger stagger and
+       spin values than the old random(0-30)/random(0-30)+10 ranges. */
+    var stagger = 9, spin = 50;
     for (var i = 0; i < length; i++) {
       var from = oldText[i] || '';
       var to = newText[i] || '';
-      var start = Math.floor(Math.random() * 30);
-      var end = start + Math.floor(Math.random() * 30) + 10;
+      var start = i * stagger;
+      var end = start + spin;
       this.queue.push({ from: from, to: to, start: start, end: end });
     }
     cancelAnimationFrame(this.frameRequest);

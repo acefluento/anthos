@@ -117,30 +117,45 @@ header.site::after {
 .btnrow { display: flex; gap: 14px; flex-wrap: wrap; }
 .addbtn { width: 100%; }
 
-/* ---------- brand hero: wreath stretched full-width, fireball travels its outline ---------- */
-.brandhero { background: var(--ink); padding: 56px 20px; }
-.brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 13 / 4; margin: 0 auto; }
-.wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* ---------- brand hero: night sky, wreath + bolt + clouds, fireball travels the wreath's outline ---------- */
+.brandhero { background: #050506; padding: 56px 20px; position: relative; overflow: hidden; }
+.storm-flash {
+  position: absolute; inset: 0; background: #dfe9ff; opacity: 0; pointer-events: none;
+  mix-blend-mode: screen; animation: storm-flash 1.1s ease-out 1 both;
+}
+@keyframes storm-flash {
+  0% { opacity: 0; } 4% { opacity: .9; } 8% { opacity: .1; }
+  13% { opacity: .75; } 20% { opacity: 0; } 100% { opacity: 0; }
+}
+.brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 1300 / 440; margin: 0 auto; }
+.wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
+.cloud { position: absolute; fill: #2a2a2e; opacity: .55; filter: blur(6px); }
+.cloud.left { left: 1%; top: 6%; width: 100px; height: 100px; }
+.cloud.right { right: 1%; top: 60%; width: 110px; height: 110px; }
+.bolt-wrap {
+  position: absolute; left: 50%; top: 50%; width: 70px; height: 420px; margin: -210px 0 0 -35px; z-index: 1;
+}
+.bolt-wrap svg { width: 100%; height: 100%; overflow: visible; }
+.bolt-wrap use {
+  fill: var(--gold); stroke: #f2d9a1; stroke-width: 2; stroke-linejoin: round;
+  filter: drop-shadow(0 0 10px rgba(176, 141, 87, .7)) drop-shadow(0 0 22px rgba(176, 141, 87, .35));
+}
 .brandhero-word {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3;
   font-family: 'Century Gothic', 'Avenir Next', 'Poppins', Futura, 'Nunito Sans', 'Trebuchet MS', Arial, sans-serif;
   font-weight: 700; text-transform: uppercase;
-  font-size: clamp(28px, 5.5vw, 64px); letter-spacing: 1.5px;
+  font-size: clamp(28px, 5.5vw, 64px); letter-spacing: 3px;
   color: #F2EEE5;
 }
-.brandhero-a {
-  background: linear-gradient(160deg, #E7C892 0%, var(--gold) 55%, #8C6B3B 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
 .fireball {
-  position: absolute; left: 50%; top: 50%; width: 0; height: 0;
+  position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 4;
   offset-rotate: auto;
   animation: fireball-travel 8s linear infinite;
 }
 .fireball-core {
-  position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff8e0 0%, #ffe27a 30%, #ff9a2e 60%, #d9601a 100%);
-  filter: drop-shadow(0 0 5px #ffb84d) drop-shadow(0 0 10px #ff8c2a);
+  position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fff2c0 20%, #ffcf4d 45%, #ff9a2e 70%, #d9601a 100%);
+  filter: drop-shadow(0 0 8px #ffd27a) drop-shadow(0 0 18px #ff9a2e) drop-shadow(0 0 30px #e8862c);
   z-index: 2;
 }
 .fireball-flame {

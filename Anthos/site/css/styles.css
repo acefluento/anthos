@@ -19,7 +19,7 @@
   --laurel: #3E4632;
   --gold: #B08D57;         /* antique brass — meander trim + wordmark glow, rgb(176,141,87) */
   --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --header-h: 156px;
+  --header-h: 72px;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
@@ -63,13 +63,19 @@ header.site::after {
 .nav-links { display: flex; gap: 28px; }
 .lk, .iconbtn { font-size: 10px; letter-spacing: 2.8px; text-transform: uppercase; color: var(--ink-2); background: none; border: 0; padding: 8px 0; }
 .lk:hover, .iconbtn:hover { color: var(--ink); }
-/* ---------- brand mark: laurel wreath + wordmark, shared by header/footer/gate ---------- */
-.brandmark, .footmark, .gatemark {
+/* ---------- header wordmark: plain text, no artwork, nothing to break ---------- */
+.brandmark {
+  justify-self: center; font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink);
+}
+.brandmark:hover { color: var(--ink-2); }
+
+/* ---------- footer / gate mark: laurel wreath + wordmark ---------- */
+.footmark, .gatemark {
   position: relative; display: grid; place-items: center; overflow: hidden; isolation: isolate;
   background: var(--ink); border-radius: 50%;
   animation: brand-glow 4.5s ease-in-out infinite;
 }
-.brandmark { justify-self: center; width: 132px; height: 132px; }
 .footmark { width: 116px; height: 116px; margin: 0 auto 20px; }
 .gatemark { width: 168px; height: 168px; margin: 0 auto 30px; }
 .wreath { position: absolute; inset: 9%; width: 82%; height: 82%; }
@@ -81,14 +87,13 @@ header.site::after {
 }
 .footmark .brandword { font-size: 16px; }
 .gatemark .brandword { font-size: 25px; letter-spacing: 1.6px; }
-.brandmark::before, .footmark::before, .gatemark::before {
+.footmark::before, .gatemark::before {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .4), transparent 62%);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .4), transparent 62%);
   mix-blend-mode: soft-light; transition: opacity .3s; opacity: 0;
 }
-.brandmark:hover::before, .brandmark:focus-visible::before,
 .footmark:hover::before, .gatemark:hover::before { opacity: 1; }
-.brandmark::after, .footmark::after, .gatemark::after {
+.footmark::after, .gatemark::after {
   content: ""; position: absolute; inset: -60%;
   background: conic-gradient(from 0deg, transparent 0 44%, rgba(255, 245, 225, .65) 50%, transparent 56% 100%);
   mix-blend-mode: overlay; animation: brand-sheen 6s linear infinite;
@@ -109,34 +114,25 @@ header.site::after {
 .btnrow { display: flex; gap: 14px; flex-wrap: wrap; }
 .addbtn { width: 100%; }
 
-/* ---------- brand hero: large glowing wreath, mirrors the header mark at hero scale ---------- */
-.brandhero { background: var(--ink); display: flex; justify-content: center; padding: 88px 20px; }
-.brandhero-badge {
-  position: relative; width: 300px; height: 300px; border-radius: 50%;
-  display: grid; place-items: center; overflow: hidden; isolation: isolate;
-  background: var(--ink);
-  animation: hero-glow 5s ease-in-out infinite;
+/* ---------- brand hero: wreath stretched full-width, fireball travels its outline ---------- */
+.brandhero { background: var(--ink); padding: 56px 20px; }
+.brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 13 / 4; margin: 0 auto; }
+.wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; }
+.brandhero-word {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: Georgia, 'Times New Roman', serif; font-size: clamp(26px, 5vw, 56px); letter-spacing: 3px;
+  background: linear-gradient(100deg, var(--gold) 0%, #F2EEE5 55%, #F2EEE5 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.brandhero-badge .brandword { font-size: 42px; letter-spacing: 2px; }
-.brandhero-badge::before {
-  content: ""; position: absolute; inset: -70%;
-  background: conic-gradient(from 0deg,
-    transparent 0 32%, rgba(176, 141, 87, .55) 40%, rgba(255, 246, 227, .85) 48%,
-    rgba(176, 141, 87, .55) 56%, transparent 64% 100%);
-  filter: blur(3px); animation: hero-spin 7s linear infinite;
+.fireball {
+  position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff8e0 0%, #ffd27a 25%, #e8a23c 50%, #a85f1a 75%, transparent 100%);
+  filter: drop-shadow(0 0 6px #ffb84d) drop-shadow(0 0 14px #e8862c) drop-shadow(0 0 24px #c9601a);
+  offset-rotate: 0deg;
+  animation: fireball-travel 8s linear infinite;
 }
-.brandhero-badge::after {
-  content: ""; position: absolute; inset: -85%;
-  background: conic-gradient(from 200deg, transparent 0 42%, rgba(176, 141, 87, .4) 50%, transparent 58% 100%);
-  filter: blur(6px); animation: hero-spin-rev 12s linear infinite;
-}
-@keyframes hero-spin { to { transform: rotate(1turn); } }
-@keyframes hero-spin-rev { to { transform: rotate(-1turn); } }
-@keyframes hero-glow {
-  0%, 100% { box-shadow: 0 0 40px 4px rgba(176, 141, 87, .3); }
-  35% { box-shadow: 0 0 100px 20px rgba(255, 246, 227, .55); }
-  70% { box-shadow: 0 0 60px 10px rgba(176, 141, 87, .45); }
-}
+@keyframes fireball-travel { from { offset-distance: 0%; } to { offset-distance: 100%; } }
 
 /* ---------- hero ---------- */
 .hero { background: linear-gradient(160deg, #F1EDE4 0%, #E7E1D5 55%, #D9D2C3 100%); border-bottom: 1px solid var(--line); }
@@ -319,7 +315,7 @@ dialog[open] ~ .toast { z-index: 2000; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1000px) {
-  :root { --header-h: 178px; }
+  :root { --header-h: 104px; }
   .wrap { padding: 0 24px; }
   .pdp, .editorial, .shop, .faq { padding-left: 24px; padding-right: 24px; }
   .hero-in, .pdp, .ed-in { grid-template-columns: 1fr; gap: 40px; }
@@ -336,13 +332,11 @@ dialog[open] ~ .toast { z-index: 2000; }
   .foot { grid-template-columns: 1fr 1fr; }
   /* header: brand + cart on row one, links on row two */
   .nav { grid-template-columns: 1fr auto; grid-template-areas: "brand cart" "links links"; gap: 0 12px; padding-top: 10px; }
-  .brandmark { grid-area: brand; justify-self: start; width: 108px; height: 108px; }
+  .brandmark { grid-area: brand; justify-self: start; }
   .navright { grid-area: cart; }
   .nav-links { grid-area: links; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); margin-top: 6px; }
   .nav-links .lk { padding: 12px 0; }
-  .brandhero { padding: 64px 20px; }
-  .brandhero-badge { width: 240px; height: 240px; }
-  .brandhero-badge .brandword { font-size: 32px; }
+  .brandhero { padding: 44px 20px; }
 }
 @media (max-width: 560px) {
   .btn { padding: 16px 22px; }
@@ -358,12 +352,9 @@ dialog[open] ~ .toast { z-index: 2000; }
   .announce span { margin: 0 4px; }
   .signup h2 { font-size: 22px; padding: 0 8px; }
   .modal-body { padding: 20px; }
-  :root { --header-h: 152px; }
-  .brandmark { width: 86px; height: 86px; }
+  .brandmark { font-size: 17px; }
   .brandword { font-size: 15px; }
-  .brandhero { padding: 48px 16px; }
-  .brandhero-badge { width: 190px; height: 190px; }
-  .brandhero-badge .brandword { font-size: 26px; }
+  .brandhero { padding: 36px 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

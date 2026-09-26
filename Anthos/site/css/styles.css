@@ -19,7 +19,7 @@
   --laurel: #3E4632;
   --gold: #B08D57;         /* antique brass — meander trim + wordmark glow, rgb(176,141,87) */
   --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --header-h: 72px;
+  --header-h: 156px;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
@@ -63,25 +63,39 @@ header.site::after {
 .nav-links { display: flex; gap: 28px; }
 .lk, .iconbtn { font-size: 10px; letter-spacing: 2.8px; text-transform: uppercase; color: var(--ink-2); background: none; border: 0; padding: 8px 0; }
 .lk:hover, .iconbtn:hover { color: var(--ink); }
-.brandmark {
-  justify-self: center; width: 268px; background: var(--ink); border-radius: 4px; padding: 10px 18px;
-  position: relative; overflow: hidden; isolation: isolate;
+/* ---------- brand mark: laurel wreath + wordmark, shared by header/footer/gate ---------- */
+.brandmark, .footmark, .gatemark {
+  position: relative; display: grid; place-items: center; overflow: hidden; isolation: isolate;
+  background: var(--ink); border-radius: 50%;
   animation: brand-glow 4.5s ease-in-out infinite;
 }
-.brandmark::before {
+.brandmark { justify-self: center; width: 132px; height: 132px; }
+.footmark { width: 116px; height: 116px; margin: 0 auto 20px; }
+.gatemark { width: 168px; height: 168px; margin: 0 auto 30px; }
+.wreath { position: absolute; inset: 9%; width: 82%; height: 82%; color: var(--gold); }
+.brandword {
+  position: relative; z-index: 1; font-family: Georgia, 'Times New Roman', serif;
+  font-size: 19px; letter-spacing: 1.2px;
+  background: linear-gradient(100deg, var(--gold) 0%, #F2EEE5 55%, #F2EEE5 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.footmark .brandword { font-size: 16px; }
+.gatemark .brandword { font-size: 25px; letter-spacing: 1.6px; }
+.brandmark::before, .footmark::before, .gatemark::before {
   content: ""; position: absolute; inset: 0;
   background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .4), transparent 62%);
   mix-blend-mode: soft-light; transition: opacity .3s; opacity: 0;
 }
-.brandmark:hover::before, .brandmark:focus-visible::before { opacity: 1; }
-.brandmark::after {
+.brandmark:hover::before, .brandmark:focus-visible::before,
+.footmark:hover::before, .gatemark:hover::before { opacity: 1; }
+.brandmark::after, .footmark::after, .gatemark::after {
   content: ""; position: absolute; inset: -60%;
   background: conic-gradient(from 0deg, transparent 0 44%, rgba(255, 245, 225, .65) 50%, transparent 56% 100%);
   mix-blend-mode: overlay; animation: brand-sheen 6s linear infinite;
 }
 @keyframes brand-glow {
-  0%, 100% { box-shadow: 0 0 16px 1px rgba(176, 141, 87, .22); }
-  50% { box-shadow: 0 0 30px 4px rgba(176, 141, 87, .48); }
+  0%, 100% { box-shadow: 0 0 20px 2px rgba(176, 141, 87, .25); }
+  50% { box-shadow: 0 0 40px 7px rgba(176, 141, 87, .5); }
 }
 @keyframes brand-sheen { to { transform: rotate(1turn); } }
 .navright { display: flex; justify-content: flex-end; }
@@ -213,7 +227,6 @@ footer.site::before {
   background-repeat: repeat-x; background-position: center;
 }
 .foot { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 30px; padding-bottom: 40px; border-bottom: 1px solid var(--line); }
-.footmark { width: 240px; margin-bottom: 16px; background: var(--ink); border-radius: 4px; padding: 12px 20px; }
 .footnote { font-size: 11px; letter-spacing: 2px; color: var(--mute); line-height: 1.9; max-width: 280px; }
 .foot b { display: block; font-weight: 400; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
 .foot a { display: block; font-size: 11px; letter-spacing: 2px; color: var(--mute); padding: 5px 0; }
@@ -267,7 +280,6 @@ dialog::backdrop { background: rgba(35, 34, 31, .38); }
 .gate { margin: auto; width: min(560px, 92vw); background: transparent; }
 .gate::backdrop { background: rgba(244, 241, 233, .98); }
 .gate-in { text-align: center; padding: 24px; }
-.gate-in img { width: min(420px, 100%); margin: 0 auto 36px; background: var(--ink); border-radius: 6px; padding: 18px 28px; }
 .gate-in h2 { font-size: 22px; font-weight: 400; margin-bottom: 30px; letter-spacing: .2px; }
 .gate-in .btnrow { justify-content: center; }
 
@@ -278,7 +290,7 @@ dialog[open] ~ .toast { z-index: 2000; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1000px) {
-  :root { --header-h: 104px; }
+  :root { --header-h: 178px; }
   .wrap { padding: 0 24px; }
   .pdp, .editorial, .shop, .faq { padding-left: 24px; padding-right: 24px; }
   .hero-in, .pdp, .ed-in { grid-template-columns: 1fr; gap: 40px; }
@@ -295,7 +307,7 @@ dialog[open] ~ .toast { z-index: 2000; }
   .foot { grid-template-columns: 1fr 1fr; }
   /* header: brand + cart on row one, links on row two */
   .nav { grid-template-columns: 1fr auto; grid-template-areas: "brand cart" "links links"; gap: 0 12px; padding-top: 10px; }
-  .brandmark { grid-area: brand; justify-self: start; width: 210px; }
+  .brandmark { grid-area: brand; justify-self: start; width: 108px; height: 108px; }
   .navright { grid-area: cart; }
   .nav-links { grid-area: links; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); margin-top: 6px; }
   .nav-links .lk { padding: 12px 0; }
@@ -314,7 +326,9 @@ dialog[open] ~ .toast { z-index: 2000; }
   .announce span { margin: 0 4px; }
   .signup h2 { font-size: 22px; padding: 0 8px; }
   .modal-body { padding: 20px; }
-  .brandmark { width: 190px; }
+  :root { --header-h: 152px; }
+  .brandmark { width: 86px; height: 86px; }
+  .brandword { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -329,5 +343,4 @@ dialog[open] ~ .toast { z-index: 2000; }
 .doc ul { list-style: disc; padding-left: 20px; }
 .doc a.back { display: inline-block; margin-bottom: 28px; }
 .notfound { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 28px; }
-.notfound img { width: min(420px, 100%); }
 .notfound h1 { font-size: 22px; font-weight: 400; }

@@ -129,13 +129,23 @@ header.site::after {
 }
 .brandhero-in { position: relative; width: 100%; max-width: 1160px; aspect-ratio: 1300 / 440; margin: 0 auto; }
 .wreath-wide { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
-.cloud { position: absolute; fill: #2a2a2e; opacity: .55; filter: blur(6px); }
-.cloud.left { left: 1%; top: 6%; width: 100px; height: 100px; }
-.cloud.right { right: 1%; top: 60%; width: 110px; height: 110px; }
-.bolt-wrap {
-  position: absolute; left: 50%; top: 50%; width: 70px; height: 420px; margin: -210px 0 0 -35px; z-index: 1;
+.cloud { position: absolute; fill: #2f2f34; opacity: .5; filter: blur(7px); animation: cloud-drift 26s ease-in-out infinite alternate; }
+.cloud.c1 { left: 0%; top: 4%; width: 110px; height: 110px; animation-duration: 24s; }
+.cloud.c2 { right: 2%; top: 58%; width: 120px; height: 120px; animation-duration: 30s; animation-direction: alternate-reverse; }
+.cloud.c3 { left: 20%; top: 78%; width: 70px; height: 70px; opacity: .35; animation-duration: 22s; }
+.cloud.c4 { right: 22%; top: 2%; width: 80px; height: 80px; opacity: .38; animation-duration: 28s; animation-direction: alternate-reverse; }
+@keyframes cloud-drift {
+  from { transform: translateX(-14px); }
+  to { transform: translateX(14px); }
 }
-.bolt-wrap svg { width: 100%; height: 100%; overflow: visible; }
+.bolt-wrap {
+  position: relative; display: inline-block; width: .55em; height: 1em; vertical-align: middle; z-index: 1;
+}
+.bolt-wrap svg {
+  position: absolute; left: 50%; top: 50%; width: 1.15em; height: 6.05em;
+  transform: translate(-50%, -50%) rotate(45deg);
+  overflow: visible;
+}
 .bolt-wrap use {
   fill: var(--gold); stroke: #f2d9a1; stroke-width: 2; stroke-linejoin: round;
   filter: drop-shadow(0 0 10px rgba(176, 141, 87, .7)) drop-shadow(0 0 22px rgba(176, 141, 87, .35));
@@ -144,8 +154,17 @@ header.site::after {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3;
   font-family: 'Century Gothic', 'Avenir Next', 'Poppins', Futura, 'Nunito Sans', 'Trebuchet MS', Arial, sans-serif;
   font-weight: 700; text-transform: uppercase;
-  font-size: clamp(28px, 5.5vw, 64px); letter-spacing: 3px;
+  font-size: clamp(28px, 5.5vw, 64px);
   color: #F2EEE5;
+}
+.brandhero-word-row {
+  display: flex; align-items: center; gap: 14px;
+  letter-spacing: 8px;
+  background: rgba(0, 0, 0, .85);
+  border: 1px solid rgba(176, 141, 87, .3);
+  box-shadow: 0 0 40px rgba(0, 0, 0, .65);
+  padding: .18em .5em;
+  border-radius: 6px;
 }
 .fireball {
   position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 4;

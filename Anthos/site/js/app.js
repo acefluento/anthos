@@ -322,6 +322,16 @@
     }).then(function () { busy(btn, false, was); });
   });
 
+  /* ---------- brandmark cursor light ---------- */
+  var brandmark = $('.brandmark');
+  if (brandmark && !reduceMotion && window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+    brandmark.addEventListener('pointermove', function (e) {
+      var r = brandmark.getBoundingClientRect();
+      brandmark.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      brandmark.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    });
+  }
+
   /* ---------- small things ---------- */
   var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 

@@ -346,8 +346,9 @@
     /* Each position starts a fixed number of frames after the previous one and spins for a
        fixed duration before locking — like a combination-safe's reels settling one at a time,
        left to right, rather than the previous fully-random per-char timing (which could let
-       a later letter lock in before an earlier one). */
-    var stagger = 4, spin = 20;
+       a later letter lock in before an earlier one). Fast and tight (Vercel-style snap), only
+       used on the hero wordmark now. */
+    var stagger = 2, spin = 10;
     for (var i = 0; i < length; i++) {
       var from = oldText[i] || '';
       var to = newText[i] || '';
@@ -370,7 +371,7 @@
         if (!q.locked) { q.locked = true; output += '<span class="dlock">' + q.to + '</span>'; }
         else { output += q.to; }
       } else if (this.frame >= q.start) {
-        if (!q.char || Math.random() < 0.5) { q.char = this.randomChar(); }
+        if (!q.char || Math.random() < 0.7) { q.char = this.randomChar(); }
         output += '<span class="dchar">' + q.char + '</span>';
       } else {
         output += q.from;

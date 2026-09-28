@@ -37,11 +37,14 @@ ul { list-style: none; }
 .hp { position: absolute; left: -9999px; }
 .eyebrow { font-size: 10px; letter-spacing: 3.2px; text-transform: uppercase; color: var(--mute); }
 
-/* ---------- scramble/decrypt text reveal (see app.js TextScramble) ---------- */
-.dchar { color: var(--gold); opacity: .85; display: inline-block; animation: dchar-fade .1s ease-out; }
-@keyframes dchar-fade { from { opacity: .2; } to { opacity: .85; } }
-.dlock { display: inline-block; animation: dlock-settle .16s ease-out; }
-@keyframes dlock-settle { from { opacity: .35; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+/* ---------- scramble/decrypt text reveal (hero wordmark only — see app.js TextScramble) ----------
+   Fast, expo-out easing (cubic-bezier(.16,1,.3,1)) with a quick blur-to-sharp on each swap, the same
+   easing shape and materialize-in feel used for Vercel-style motion, rather than a linear/ease-out
+   flicker. */
+.dchar { color: var(--gold); opacity: .85; display: inline-block; animation: dchar-fade .07s cubic-bezier(.16, 1, .3, 1); }
+@keyframes dchar-fade { from { opacity: .1; filter: blur(2px); } to { opacity: .85; filter: blur(0); } }
+.dlock { display: inline-block; animation: dlock-settle .18s cubic-bezier(.16, 1, .3, 1); }
+@keyframes dlock-settle { from { opacity: 0; filter: blur(3px); transform: translateY(-3px); } to { opacity: 1; filter: blur(0); transform: translateY(0); } }
 
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .signup :focus-visible, .announce :focus-visible { outline-color: #F2EEE5; }
